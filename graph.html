@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#FB7E81", "desc": "Builds and maintains basic websites. Focuses on frontend code and simple backend logic.", "font": {"color": "white"}, "id": "Junior Web Developer", "label": "Junior Web Developer", "salary": "$55k - $80k", "shape": "dot", "size": 10, "title": "Prerequisite", "type": "concept"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "HTML/CSS", "label": "HTML/CSS", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "JavaScript", "label": "JavaScript", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Git", "label": "Git", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Basic API Usage", "label": "Basic API Usage", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FB7E81", "font": {"color": "white"}, "id": "Programming Basics", "label": "Programming Basics", "shape": "dot", "size": 10, "title": "Prerequisite", "type": "concept"}, {"color": "#FB7E81", "desc": "Specializes in the visual part of applications. Ensures responsiveness and user experience.", "font": {"color": "white"}, "id": "Frontend Developer", "label": "Frontend Developer", "salary": "$80k - $120k", "shape": "dot", "size": 10, "title": "Prerequisite", "type": "concept"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "React", "label": "React", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#ff4b4b", "desc": "Handles server-side logic, databases, and API architecture.", "font": {"color": "white"}, "id": "Backend Developer", "label": "Backend Developer", "salary": "$90k - $135k", "shape": "dot", "size": 40, "title": "Prerequisite", "type": "concept"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Python", "label": "Python", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Node.js", "label": "Node.js", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "SQL", "label": "SQL", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "REST APIs", "label": "REST APIs", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Microservices", "label": "Microservices", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FB7E81", "font": {"color": "white"}, "id": "Database Fundamentals", "label": "Database Fundamentals", "shape": "dot", "size": 10, "title": "Prerequisite", "type": "concept"}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "data_scientist", "label": "data_scientist", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "ml_engineer", "label": "ml_engineer", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "gen_ai_engineer", "label": "gen_ai_engineer", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "data_analyst", "label": "data_analyst", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "data_engineer", "label": "data_engineer", "shape": "dot", "size": 10}, {"color": "#97C2FC", "desc": "Versatile developer capable of handling both client-side and server-side code.", "font": {"color": "white"}, "id": "Full Stack Developer", "label": "Full Stack Developer", "salary": "$100k - $150k", "shape": "dot", "size": 10, "title": "Versatile developer capable of handling both client-side and server-side code.", "type": "role"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "System Design", "label": "System Design", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "GraphQL", "label": "GraphQL", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "CI/CD Basics", "label": "CI/CD Basics", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FB7E81", "desc": "Bridges development and operations. Focuses on automation, infrastructure, and reliability.", "font": {"color": "white"}, "id": "DevOps Engineer", "label": "DevOps Engineer", "salary": "$115k - $160k", "shape": "dot", "size": 10, "title": "Prerequisite", "type": "concept"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "CI/CD Pipelines", "label": "CI/CD Pipelines", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Infrastructure as Code", "label": "Infrastructure as Code", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Scripting (Bash/Python)", "label": "Scripting (Bash/Python)", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Linux Administration", "label": "Linux Administration", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FB7E81", "desc": "The starting point for many tech careers. Handles hardware troubleshooting, network basics, and user support.", "font": {"color": "white"}, "id": "IT Support Specialist", "label": "IT Support Specialist", "salary": "$45k - $65k", "shape": "dot", "size": 10, "title": "Prerequisite", "type": "concept"}, {"color": "#97C2FC", "desc": "Designs high-level cloud infrastructure strategies and ensures scalability and security.", "font": {"color": "white"}, "id": "Cloud Architect", "label": "Cloud Architect", "salary": "$140k - $200k", "shape": "dot", "size": 10, "title": "Designs high-level cloud infrastructure strategies and ensures scalability and security.", "type": "role"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "AWS/Azure Architecture", "label": "AWS/Azure Architecture", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Cost Optimization", "label": "Cost Optimization", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Security Compliance", "label": "Security Compliance", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Disaster Recovery", "label": "Disaster Recovery", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FB7E81", "desc": "Interprets data to help businesses make decisions. Creates visualizations and reports.", "font": {"color": "white"}, "id": "Data Analyst", "label": "Data Analyst", "salary": "$65k - $95k", "shape": "dot", "size": 10, "title": "Prerequisite", "type": "concept"}, {"color": "#FB7E81", "desc": "Uses advanced statistics and machine learning to build predictive models.", "font": {"color": "white"}, "id": "Data Scientist", "label": "Data Scientist", "salary": "$110k - $160k", "shape": "dot", "size": 10, "title": "Prerequisite", "type": "concept"}, {"color": "#97C2FC", "desc": "Builds the pipelines that transport and transform data for analysis.", "font": {"color": "white"}, "id": "Data Engineer", "label": "Data Engineer", "salary": "$120k - $170k", "shape": "dot", "size": 10, "title": "Builds the pipelines that transport and transform data for analysis.", "type": "role"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "ETL Pipelines", "label": "ETL Pipelines", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Big Data (Spark/Hadoop)", "label": "Big Data (Spark/Hadoop)", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "SQL \u0026 NoSQL", "label": "SQL \u0026 NoSQL", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Data Warehousing", "label": "Data Warehousing", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FB7E81", "desc": "Focuses on deploying and scaling machine learning models in production.", "font": {"color": "white"}, "id": "Machine Learning Engineer", "label": "Machine Learning Engineer", "salary": "$130k - $190k", "shape": "dot", "size": 10, "title": "Prerequisite", "type": "concept"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Model Deployment", "label": "Model Deployment", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Deep Learning", "label": "Deep Learning", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "TensorFlow/PyTorch", "label": "TensorFlow/PyTorch", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#97C2FC", "desc": "Specialist in LLMs, RAG systems, and agentic workflows. The cutting edge of AI.", "font": {"color": "white"}, "id": "Generative AI Engineer", "label": "Generative AI Engineer", "salary": "$150k - $220k", "shape": "dot", "size": 10, "title": "Specialist in LLMs, RAG systems, and agentic workflows. The cutting edge of AI.", "type": "role"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Large Language Models", "label": "Large Language Models", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "RAG (Retrieval Augmented Generation)", "label": "RAG (Retrieval Augmented Generation)", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Prompt Engineering", "label": "Prompt Engineering", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Fine-tuning", "label": "Fine-tuning", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FB7E81", "desc": "Monitors networks for security breaches and investigates violations.", "font": {"color": "white"}, "id": "Cybersecurity Analyst", "label": "Cybersecurity Analyst", "salary": "$90k - $130k", "shape": "dot", "size": 10, "title": "Prerequisite", "type": "concept"}, {"color": "#97C2FC", "desc": "Simulates cyberattacks to identify vulnerabilities in systems.", "font": {"color": "white"}, "id": "Penetration Tester (Ethical Hacker)", "label": "Penetration Tester (Ethical Hacker)", "salary": "$100k - $150k", "shape": "dot", "size": 10, "title": "Simulates cyberattacks to identify vulnerabilities in systems.", "type": "role"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Ethical Hacking", "label": "Ethical Hacking", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Scripting", "label": "Scripting", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Web App Security", "label": "Web App Security", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Social Engineering", "label": "Social Engineering", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#97C2FC", "desc": "Creates video games, focusing on gameplay mechanics, physics, and graphics.", "font": {"color": "white"}, "id": "Game Developer", "label": "Game Developer", "salary": "$80k - $130k", "shape": "dot", "size": 10, "title": "Creates video games, focusing on gameplay mechanics, physics, and graphics.", "type": "role"}, {"color": "#97C2FC", "desc": "Develops decentralized applications (dApps) and smart contracts.", "font": {"color": "white"}, "id": "Blockchain Developer", "label": "Blockchain Developer", "salary": "$110k - $170k", "shape": "dot", "size": 10, "title": "Develops decentralized applications (dApps) and smart contracts.", "type": "role"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Solidity", "label": "Solidity", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Smart Contracts", "label": "Smart Contracts", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Cryptography", "label": "Cryptography", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FFFF00", "font": {"color": "white"}, "id": "Web3.js", "label": "Web3.js", "shape": "dot", "size": 10, "title": "Skill", "type": "skill"}, {"color": "#FB7E81", "font": {"color": "white"}, "id": "Cryptography Basics", "label": "Cryptography Basics", "shape": "dot", "size": 10, "title": "Prerequisite", "type": "concept"}, {"color": "#97C2FC", "desc": "Writes automated tests to ensure software quality before release.", "font": {"color": "white"}, "id": "QA Automation Engineer", "label": "QA Automation Engineer", "salary": "$80k - $120k", "shape": "dot", "size": 10, "title": "Writes automated tests to ensure software quality before release.", "type": "role"}, {"color": "#97C2FC", "desc": "Treats operations as a software problem. Focuses on system uptime and performance.", "font": {"color": "white"}, "id": "Site Reliability Engineer (SRE)", "label": "Site Reliability Engineer (SRE)", "salary": "$130k - $180k", "shape": "dot", "size": 10, "title": "Treats operations as a software problem. Focuses on system uptime and performance.", "type": "role"}]);
+                  edges = new vis.DataSet([{"from": "Junior Web Developer", "relation": "requires", "to": "HTML/CSS", "width": 1}, {"from": "Junior Web Developer", "relation": "requires", "to": "JavaScript", "width": 1}, {"from": "Junior Web Developer", "relation": "requires", "to": "Git", "width": 1}, {"from": "Junior Web Developer", "relation": "requires", "to": "Basic API Usage", "width": 1}, {"from": "Junior Web Developer", "relation": "depends_on", "to": "Programming Basics", "width": 1}, {"from": "Frontend Developer", "relation": "requires", "to": "React", "width": 1}, {"from": "Frontend Developer", "relation": "depends_on", "to": "Junior Web Developer", "width": 1}, {"from": "Backend Developer", "relation": "requires", "to": "Python", "width": 1}, {"from": "Backend Developer", "relation": "requires", "to": "Node.js", "width": 1}, {"from": "Backend Developer", "relation": "requires", "to": "SQL", "width": 1}, {"from": "Backend Developer", "relation": "requires", "to": "REST APIs", "width": 1}, {"from": "Backend Developer", "relation": "requires", "to": "Microservices", "width": 1}, {"from": "Backend Developer", "relation": "depends_on", "to": "Junior Web Developer", "width": 1}, {"from": "Backend Developer", "relation": "depends_on", "to": "Database Fundamentals", "width": 1}, {"from": "Python", "relation": "critical_for", "to": "data_scientist", "width": 1}, {"from": "Python", "relation": "critical_for", "to": "ml_engineer", "width": 1}, {"from": "Python", "relation": "critical_for", "to": "gen_ai_engineer", "width": 1}, {"from": "SQL", "relation": "critical_for", "to": "data_analyst", "width": 1}, {"from": "SQL", "relation": "critical_for", "to": "data_engineer", "width": 1}, {"from": "Full Stack Developer", "relation": "requires", "to": "React", "width": 1}, {"from": "Full Stack Developer", "relation": "requires", "to": "Node.js", "width": 1}, {"from": "Full Stack Developer", "relation": "requires", "to": "System Design", "width": 1}, {"from": "Full Stack Developer", "relation": "requires", "to": "GraphQL", "width": 1}, {"from": "Full Stack Developer", "relation": "requires", "to": "CI/CD Basics", "width": 1}, {"from": "Full Stack Developer", "relation": "depends_on", "to": "Frontend Developer", "width": 1}, {"from": "Full Stack Developer", "relation": "depends_on", "to": "Backend Developer", "width": 1}, {"from": "DevOps Engineer", "relation": "requires", "to": "CI/CD Pipelines", "width": 1}, {"from": "DevOps Engineer", "relation": "requires", "to": "Infrastructure as Code", "width": 1}, {"from": "DevOps Engineer", "relation": "requires", "to": "Scripting (Bash/Python)", "width": 1}, {"from": "DevOps Engineer", "relation": "requires", "to": "Linux Administration", "width": 1}, {"from": "DevOps Engineer", "relation": "depends_on", "to": "Backend Developer", "width": 1}, {"from": "DevOps Engineer", "relation": "depends_on", "to": "IT Support Specialist", "width": 1}, {"from": "Cloud Architect", "relation": "requires", "to": "AWS/Azure Architecture", "width": 1}, {"from": "Cloud Architect", "relation": "requires", "to": "Cost Optimization", "width": 1}, {"from": "Cloud Architect", "relation": "requires", "to": "Security Compliance", "width": 1}, {"from": "Cloud Architect", "relation": "requires", "to": "Disaster Recovery", "width": 1}, {"from": "Cloud Architect", "relation": "depends_on", "to": "DevOps Engineer", "width": 1}, {"from": "Cloud Architect", "relation": "depends_on", "to": "Backend Developer", "width": 1}, {"from": "Data Analyst", "relation": "requires", "to": "SQL", "width": 1}, {"from": "Data Analyst", "relation": "depends_on", "to": "IT Support Specialist", "width": 1}, {"from": "Data Scientist", "relation": "requires", "to": "Python", "width": 1}, {"from": "Data Scientist", "relation": "depends_on", "to": "Data Analyst", "width": 1}, {"from": "Data Engineer", "relation": "requires", "to": "ETL Pipelines", "width": 1}, {"from": "Data Engineer", "relation": "requires", "to": "Big Data (Spark/Hadoop)", "width": 1}, {"from": "Data Engineer", "relation": "requires", "to": "SQL \u0026 NoSQL", "width": 1}, {"from": "Data Engineer", "relation": "requires", "to": "Data Warehousing", "width": 1}, {"from": "Data Engineer", "relation": "depends_on", "to": "Backend Developer", "width": 1}, {"from": "Data Engineer", "relation": "depends_on", "to": "Data Analyst", "width": 1}, {"from": "Machine Learning Engineer", "relation": "requires", "to": "Model Deployment", "width": 1}, {"from": "Machine Learning Engineer", "relation": "requires", "to": "Deep Learning", "width": 1}, {"from": "Machine Learning Engineer", "relation": "requires", "to": "Python", "width": 1}, {"from": "Machine Learning Engineer", "relation": "requires", "to": "TensorFlow/PyTorch", "width": 1}, {"from": "Machine Learning Engineer", "relation": "depends_on", "to": "Data Scientist", "width": 1}, {"from": "Machine Learning Engineer", "relation": "depends_on", "to": "Backend Developer", "width": 1}, {"from": "Generative AI Engineer", "relation": "requires", "to": "Large Language Models", "width": 1}, {"from": "Generative AI Engineer", "relation": "requires", "to": "RAG (Retrieval Augmented Generation)", "width": 1}, {"from": "Generative AI Engineer", "relation": "requires", "to": "Prompt Engineering", "width": 1}, {"from": "Generative AI Engineer", "relation": "requires", "to": "Fine-tuning", "width": 1}, {"from": "Generative AI Engineer", "relation": "depends_on", "to": "Machine Learning Engineer", "width": 1}, {"from": "Generative AI Engineer", "relation": "depends_on", "to": "Backend Developer", "width": 1}, {"from": "Cybersecurity Analyst", "relation": "depends_on", "to": "IT Support Specialist", "width": 1}, {"from": "Penetration Tester (Ethical Hacker)", "relation": "requires", "to": "Ethical Hacking", "width": 1}, {"from": "Penetration Tester (Ethical Hacker)", "relation": "requires", "to": "Scripting", "width": 1}, {"from": "Penetration Tester (Ethical Hacker)", "relation": "requires", "to": "Web App Security", "width": 1}, {"from": "Penetration Tester (Ethical Hacker)", "relation": "requires", "to": "Social Engineering", "width": 1}, {"from": "Penetration Tester (Ethical Hacker)", "relation": "depends_on", "to": "Cybersecurity Analyst", "width": 1}, {"from": "Penetration Tester (Ethical Hacker)", "relation": "depends_on", "to": "Backend Developer", "width": 1}, {"from": "Game Developer", "relation": "depends_on", "to": "Junior Web Developer", "width": 1}, {"from": "Blockchain Developer", "relation": "requires", "to": "Solidity", "width": 1}, {"from": "Blockchain Developer", "relation": "requires", "to": "Smart Contracts", "width": 1}, {"from": "Blockchain Developer", "relation": "requires", "to": "Cryptography", "width": 1}, {"from": "Blockchain Developer", "relation": "requires", "to": "Web3.js", "width": 1}, {"from": "Blockchain Developer", "relation": "depends_on", "to": "Backend Developer", "width": 1}, {"from": "Blockchain Developer", "relation": "depends_on", "to": "Cryptography Basics", "width": 1}, {"from": "QA Automation Engineer", "relation": "requires", "to": "Scripting", "width": 1}, {"from": "QA Automation Engineer", "relation": "depends_on", "to": "Junior Web Developer", "width": 1}, {"from": "Site Reliability Engineer (SRE)", "relation": "depends_on", "to": "DevOps Engineer", "width": 1}, {"from": "data_analyst", "relation": "can_transition_to", "to": "data_scientist", "width": 1}, {"from": "data_scientist", "relation": "foundation_for", "to": "ml_engineer", "width": 1}, {"from": "ml_engineer", "relation": "evolves_into", "to": "gen_ai_engineer", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

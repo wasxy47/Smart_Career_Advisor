@@ -1,0 +1,203 @@
+{
+  "roles": [
+    {
+      "id": "entry_level_it",
+      "title": "IT Support Specialist",
+      "salary_range": "$45k - $65k",
+      "description": "The starting point for many tech careers. Handles hardware troubleshooting, network basics, and user support.",
+      "skills": ["Troubleshooting", "Windows/Linux OS", "Networking Basics", "Active Directory"],
+      "tools": ["Jira Service Desk", "Remote Desktop", "Office 365"],
+      "prerequisites": ["High School Diploma", "CompTIA A+"]
+    },
+    {
+      "id": "junior_web_dev",
+      "title": "Junior Web Developer",
+      "salary_range": "$55k - $80k",
+      "description": "Builds and maintains basic websites. Focuses on frontend code and simple backend logic.",
+      "skills": ["HTML/CSS", "JavaScript", "Git", "Basic API Usage"],
+      "tools": ["VS Code", "Chrome DevTools", "GitHub"],
+      "prerequisites": ["Programming Basics"]
+    },
+    {
+      "id": "frontend_dev",
+      "title": "Frontend Developer",
+      "salary_range": "$80k - $120k",
+      "description": "Specializes in the visual part of applications. Ensures responsiveness and user experience.",
+      "skills": ["React", "TypeScript", "Tailwind CSS", "State Management (Redux)"],
+      "tools": ["Figma", "Webpack", "Vercel"],
+      "prerequisites": ["junior_web_dev"]
+    },
+    {
+      "id": "backend_dev",
+      "title": "Backend Developer",
+      "salary_range": "$90k - $135k",
+      "description": "Handles server-side logic, databases, and API architecture.",
+      "skills": ["Python", "Node.js", "SQL", "REST APIs", "Microservices"],
+      "tools": ["PostgreSQL", "Docker", "Postman", "Redis"],
+      "prerequisites": ["junior_web_dev", "Database Fundamentals"]
+    },
+    {
+      "id": "fullstack_dev",
+      "title": "Full Stack Developer",
+      "salary_range": "$100k - $150k",
+      "description": "Versatile developer capable of handling both client-side and server-side code.",
+      "skills": ["React", "Node.js", "System Design", "GraphQL", "CI/CD Basics"],
+      "tools": ["Docker", "AWS (Basic)", "Next.js"],
+      "prerequisites": ["frontend_dev", "backend_dev"]
+    },
+    {
+      "id": "devops_engineer",
+      "title": "DevOps Engineer",
+      "salary_range": "$115k - $160k",
+      "description": "Bridges development and operations. Focuses on automation, infrastructure, and reliability.",
+      "skills": ["CI/CD Pipelines", "Infrastructure as Code", "Scripting (Bash/Python)", "Linux Administration"],
+      "tools": ["Jenkins", "Terraform", "Ansible", "GitLab CI"],
+      "prerequisites": ["backend_dev", "entry_level_it"]
+    },
+    {
+      "id": "cloud_architect",
+      "title": "Cloud Architect",
+      "salary_range": "$140k - $200k",
+      "description": "Designs high-level cloud infrastructure strategies and ensures scalability and security.",
+      "skills": ["AWS/Azure Architecture", "Cost Optimization", "Security Compliance", "Disaster Recovery"],
+      "tools": ["Kubernetes", "Terraform", "AWS CloudFormation"],
+      "prerequisites": ["devops_engineer", "backend_dev"]
+    },
+    {
+      "id": "data_analyst",
+      "title": "Data Analyst",
+      "salary_range": "$65k - $95k",
+      "description": "Interprets data to help businesses make decisions. Creates visualizations and reports.",
+      "skills": ["SQL", "Excel (Advanced)", "Data Visualization", "Basic Python"],
+      "tools": ["Tableau", "PowerBI", "Jupyter Notebooks"],
+      "prerequisites": ["Statistics Basics", "entry_level_it"]
+    },
+    {
+      "id": "data_scientist",
+      "title": "Data Scientist",
+      "salary_range": "$110k - $160k",
+      "description": "Uses advanced statistics and machine learning to build predictive models.",
+      "skills": ["Python", "Machine Learning Algorithms", "Pandas/NumPy", "Statistics"],
+      "tools": ["Scikit-learn", "Jupyter", "Matplotlib"],
+      "prerequisites": ["data_analyst", "Linear Algebra"]
+    },
+    {
+      "id": "data_engineer",
+      "title": "Data Engineer",
+      "salary_range": "$120k - $170k",
+      "description": "Builds the pipelines that transport and transform data for analysis.",
+      "skills": ["ETL Pipelines", "Big Data (Spark/Hadoop)", "SQL & NoSQL", "Data Warehousing"],
+      "tools": ["Apache Airflow", "Snowflake", "Kafka", "dbt"],
+      "prerequisites": ["backend_dev", "data_analyst"]
+    },
+    {
+      "id": "ml_engineer",
+      "title": "Machine Learning Engineer",
+      "salary_range": "$130k - $190k",
+      "description": "Focuses on deploying and scaling machine learning models in production.",
+      "skills": ["Model Deployment", "Deep Learning", "Python", "TensorFlow/PyTorch"],
+      "tools": ["Docker", "Kubernetes", "MLflow", "HuggingFace"],
+      "prerequisites": ["data_scientist", "backend_dev"]
+    },
+    {
+      "id": "gen_ai_engineer",
+      "title": "Generative AI Engineer",
+      "salary_range": "$150k - $220k",
+      "description": "Specialist in LLMs, RAG systems, and agentic workflows. The cutting edge of AI.",
+      "skills": ["Large Language Models", "RAG (Retrieval Augmented Generation)", "Prompt Engineering", "Fine-tuning"],
+      "tools": ["LangChain", "LlamaIndex", "OpenAI API", "Pinecone (Vector DB)", "Ollama"],
+      "prerequisites": ["ml_engineer", "backend_dev"]
+    },
+    {
+      "id": "cyber_security_analyst",
+      "title": "Cybersecurity Analyst",
+      "salary_range": "$90k - $130k",
+      "description": "Monitors networks for security breaches and investigates violations.",
+      "skills": ["Network Security", "Incident Response", "Risk Assessment", "SIEM Tools"],
+      "tools": ["Splunk", "Wireshark", "Nmap"],
+      "prerequisites": ["entry_level_it", "Networking Fundamentals"]
+    },
+    {
+      "id": "penetration_tester",
+      "title": "Penetration Tester (Ethical Hacker)",
+      "salary_range": "$100k - $150k",
+      "description": "Simulates cyberattacks to identify vulnerabilities in systems.",
+      "skills": ["Ethical Hacking", "Scripting", "Web App Security", "Social Engineering"],
+      "tools": ["Metasploit", "Burp Suite", "Kali Linux"],
+      "prerequisites": ["cyber_security_analyst", "backend_dev"]
+    },
+    {
+      "id": "mobile_dev",
+      "title": "Mobile App Developer",
+      "salary_range": "$90k - $140k",
+      "description": "Builds applications for iOS and Android devices.",
+      "skills": ["React Native", "Swift (iOS)", "Kotlin (Android)", "Mobile UI Design"],
+      "tools": ["Xcode", "Android Studio", "Expo"],
+      "prerequisites": ["frontend_dev"]
+    },
+    {
+      "id": "game_dev",
+      "title": "Game Developer",
+      "salary_range": "$80k - $130k",
+      "description": "Creates video games, focusing on gameplay mechanics, physics, and graphics.",
+      "skills": ["C++", "C#", "3D Mathematics", "Physics Engines"],
+      "tools": ["Unity", "Unreal Engine", "Blender"],
+      "prerequisites": ["junior_web_dev", "Linear Algebra"]
+    },
+    {
+      "id": "blockchain_dev",
+      "title": "Blockchain Developer",
+      "salary_range": "$110k - $170k",
+      "description": "Develops decentralized applications (dApps) and smart contracts.",
+      "skills": ["Solidity", "Smart Contracts", "Cryptography", "Web3.js"],
+      "tools": ["Ethereum", "Hardhat", "Metamask"],
+      "prerequisites": ["backend_dev", "Cryptography Basics"]
+    },
+    {
+      "id": "qa_engineer",
+      "title": "QA Automation Engineer",
+      "salary_range": "$80k - $120k",
+      "description": "Writes automated tests to ensure software quality before release.",
+      "skills": ["Automated Testing", "Scripting", "CI/CD Integration"],
+      "tools": ["Selenium", "Cypress", "JUnit"],
+      "prerequisites": ["junior_web_dev"]
+    },
+    {
+      "id": "product_manager",
+      "title": "Technical Product Manager",
+      "salary_range": "$110k - $160k",
+      "description": "Bridges the gap between business requirements and engineering teams.",
+      "skills": ["Agile/Scrum", "User Story Mapping", "Data Analysis", "Stakeholder Management"],
+      "tools": ["Jira", "Notion", "Mixpanel"],
+      "prerequisites": ["data_analyst", "frontend_dev", "Business Administration"]
+    },
+    {
+      "id": "site_reliability_engineer",
+      "title": "Site Reliability Engineer (SRE)",
+      "salary_range": "$130k - $180k",
+      "description": "Treats operations as a software problem. Focuses on system uptime and performance.",
+      "skills": ["System Architecture", "Incident Management", "Observability", "Go/Python"],
+      "tools": ["Prometheus", "Grafana", "PagerDuty", "Kubernetes"],
+      "prerequisites": ["devops_engineer"]
+    }
+  ],
+  "skills_relations": [
+    { "source": "entry_level_it", "relation": "foundation_for", "target": "cyber_security_analyst" },
+    { "source": "entry_level_it", "relation": "foundation_for", "target": "devops_engineer" },
+    { "source": "frontend_dev", "relation": "component_of", "target": "fullstack_dev" },
+    { "source": "backend_dev", "relation": "component_of", "target": "fullstack_dev" },
+    { "source": "backend_dev", "relation": "prerequisite_of", "target": "devops_engineer" },
+    { "source": "devops_engineer", "relation": "path_to", "target": "site_reliability_engineer" },
+    { "source": "data_analyst", "relation": "can_transition_to", "target": "data_scientist" },
+    { "source": "data_scientist", "relation": "foundation_for", "target": "ml_engineer" },
+    { "source": "ml_engineer", "relation": "evolves_into", "target": "gen_ai_engineer" },
+    { "source": "backend_dev", "relation": "necessary_for", "target": "gen_ai_engineer" },
+    { "source": "Python", "relation": "critical_for", "target": "data_scientist" },
+    { "source": "Python", "relation": "critical_for", "target": "ml_engineer" },
+    { "source": "Python", "relation": "critical_for", "target": "gen_ai_engineer" },
+    { "source": "SQL", "relation": "critical_for", "target": "data_analyst" },
+    { "source": "SQL", "relation": "critical_for", "target": "data_engineer" },
+    { "source": "Linux Administration", "relation": "critical_for", "target": "devops_engineer" },
+    { "source": "cyber_security_analyst", "relation": "prerequisite_of", "target": "penetration_tester" }
+  ]
+}
