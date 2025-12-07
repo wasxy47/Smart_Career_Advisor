@@ -1,15 +1,16 @@
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
-from src.config import Config  # <--- NEW IMPORT
+from src.config import Config
 import json
 import os
+import shutil
 
 class CareerVectorStore:
     def __init__(self):
-        # Use the model name from Config
-        print(f"Loading embedding model: {Config.EMBEDDING_MODEL}...")
-        self.embeddings = HuggingFaceEmbeddings(model_name=Config.EMBEDDING_MODEL)
+        # 1. FORCE Local Embeddings (Free & Unlimited)
+        print(f"Loading local embedding model: {Config.EMBEDDING_MODEL}...")
+        self.embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
         self.vector_db = None
 
     def ingest_data(self, file_path):
@@ -18,15 +19,41 @@ class CareerVectorStore:
 
         documents = []
         for role in data['roles']:
-            content = f"Role: {role['title']}. Description: {role['description']}. Skills: {', '.join(role['skills'])}."
-            doc = Document(page_content=content, metadata={"title": role['title'], "type": "role"})
+            # Create rich context from ALL JSON fields
+            content_parts = []
+            for key, value in role.items():
+                if key == 'id': continue
+                
+                if isinstance(value, list):
+                    value_str = ", ".join(value)
+                else:
+                    value_str = str(value)
+                
+                content_parts.append(f"{key.capitalize()}: {value_str}")
+            
+            full_content = ". ".join(content_parts)
+            doc = Document(page_content=full_content, metadata={"title": role['title'], "type": "role"})
             documents.append(doc)
 
-        # Use the Persistent Path from Config (optional, but good practice)
-        self.vector_db = Chroma.from_documents(documents, self.embeddings)
-        print("Vector Store Created Successfully.")
+        # 2. Save to Disk so we don't have to rebuild every time
+        # This creates the 'chroma_db' folder you were looking for
+        if os.path.exists(Config.VECTOR_DB_PATH):
+    # 'ignore_errors=True' tells Windows: "If it's locked, just skip it and move on."
+            shutil.rmtree(Config.VECTOR_DB_PATH, ignore_errors=True)
+            
+        self.vector_db = Chroma.from_documents(
+            documents, 
+            self.embeddings, 
+            persist_directory=Config.VECTOR_DB_PATH
+        )
+        print("Vector Store Created & Saved Successfully.")
 
     def search(self, query, k=2):
+        # 3. Load from Disk if available
         if not self.vector_db:
-            return [] 
+            self.vector_db = Chroma(
+                persist_directory=Config.VECTOR_DB_PATH, 
+                embedding_function=self.embeddings
+            )
+            
         return self.vector_db.similarity_search(query, k=k)
