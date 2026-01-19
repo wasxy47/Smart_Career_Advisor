@@ -9,7 +9,7 @@ class Config:
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
     
     # 2. Model Settings (Change these here to update the whole app!)
-    LLM_MODEL = "gemini-2.0-flash" 
+    LLM_MODEL = "gemini-flash-latest" 
     EMBEDDING_MODEL = "all-MiniLM-L6-v2"
     
     # 3. File Paths

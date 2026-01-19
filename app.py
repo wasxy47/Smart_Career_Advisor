@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 import os
-from src.config import Config  # <--- NEW IMPORT
+from src.config import Config
 from src.graph_builder import CareerGraph
 from src.vector_store import CareerVectorStore
 from src.retriever import HybridRetriever
@@ -34,9 +34,42 @@ try:
         if st.button("Get Advice"):
             if user_query:
                 with st.spinner("Analyzing Knowledge Graph..."):
-                    response = agent.run(user_query)
+                    # Run the agent
+                    result = agent.run(user_query)
+                    
                     st.markdown("### 💡 AI Advice:")
-                    st.write(response)
+                    
+                    # --- NEW RESPONSE PARSING LOGIC ---
+                    final_text = ""
+                    
+                    # Check if result is a dictionary (The LangGraph State)
+                    if isinstance(result, dict) and "response" in result:
+                        content = result["response"]
+                        
+                        # Case 1: Standard LangChain Message Object
+                        if hasattr(content, "content"):
+                            final_text = content.content
+                        
+                        # Case 2: List of dictionaries (The Google/Gemini JSON format you saw)
+                        elif isinstance(content, list) and len(content) > 0:
+                            first_item = content[0]
+                            if isinstance(first_item, dict):
+                                final_text = first_item.get("text", str(content))
+                            else:
+                                final_text = str(content)
+                                
+                        # Case 3: It is just a string
+                        elif isinstance(content, str):
+                            final_text = content
+                        else:
+                            final_text = str(content)
+                            
+                    # Fallback if result isn't a dict
+                    else:
+                        final_text = str(result)
+
+                    # Display the cleaned text
+                    st.markdown(final_text)
             else:
                 st.warning("Please enter a question.")
 
@@ -49,8 +82,11 @@ try:
         
         with col1:
             # Dropdown to pick a role (sorted alphabetically)
-            all_nodes = sorted(list(graph_system.graph.nodes))
-            selected_node = st.selectbox("Focus on a specific Role or Skill:", ["Full Network"] + all_nodes)
+            if graph_system and graph_system.graph:
+                all_nodes = sorted(list(graph_system.graph.nodes))
+                selected_node = st.selectbox("Focus on a specific Role or Skill:", ["Full Network"] + all_nodes)
+            else:
+                selected_node = "Full Network"
 
         with col2:
             st.write("") # Spacer
@@ -65,7 +101,7 @@ try:
                 path = graph_system.visualize(output_file)
             else:
                 st.success(f"Generating focused path for: **{selected_node}**")
-                # Call our NEW method
+                # Call our visualizer method
                 path = graph_system.visualize_path(selected_node, output_file)
 
             # Display the result
